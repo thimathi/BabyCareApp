@@ -54,6 +54,10 @@ The **Baby Care Mobile Application** is a comprehensive digital parenting assist
 | Database setup & integration | 7 days |
 | Testing, bug fixes, deployment | 3 days |
 
+## 📑 Documents & UI Designs
+- All Resourse Documents- Drive link  ( https://drive.google.com/drive/folders/17O5IODlIbUQwf7evltFEERU6XkD6aI_V?usp=drive_link )
+- Figma UI Designs - Figma Link ( https://www.figma.com/design/4RqA17Y6ilj3XaMl0KdFi1/Baby-Mine?node-id=0-1&p=f&t=ZtGoFwkvNrKQt2Nn-0 )
+
 ## 🔐 Security & Compliance
 - Data encryption and multi-factor authentication.
 - Compliance with child protection and healthcare data privacy laws.
