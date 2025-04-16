@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import {View,Text,TextInput,TouchableOpacity,Image,StyleSheet,} from "react-native";
+import React, { useState, useEffect } from "react"; // Make sure useEffect is imported
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "../../constant/Colors"; // For Google Icon
 import { i18n } from "../utils/i18n";
+
+import { supabase } from "../../lib/supabase";
 
 export default function SignIn() {
     const router = useRouter();
@@ -11,13 +13,88 @@ export default function SignIn() {
     const [email, setEmail] = useState("");
     const [createPassword, setCreatePassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleGoogleLogin = () => {
-        console.log("Google Login/Signin Clicked");
+    const showAlert = (title, message) => {
+        Alert.alert(
+            title,
+            message,
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+        );
     };
 
-    const handleSignin = () => {
-        console.log("userName:",userName,"Email:", email, "createPassword:", createPassword,"confirmPassword:", confirmPassword);
+        const handleGoogleLogin = async () => {
+            setLoading(true);
+            try {
+                const { error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: `${window.location.origin}/auth/callback`,
+                    },
+                });
+                
+                if (error) {
+                    showAlert("Google Login Failed", error.message);
+                }
+            } catch (error) {
+                showAlert("Google Login Error", error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+
+    const handleSignin = async () => {
+        // Validation checks
+        if (!userName || !email || !createPassword || !confirmPassword) {
+            showAlert("Error", "Please fill all fields");
+            return;
+        }
+
+        if (createPassword !== confirmPwassword) {
+            showAlert("Error", "Passwords don't match");
+            return;
+        }
+
+        if (createPassword.length < 6) {
+            showAlert("Error", "Password should be at least 6 characters");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email: email.trim(),
+                password: createPassword,
+                options: {
+                    data: {
+                        username: userName
+                    }
+                }
+            });
+
+            if (error) {
+                showAlert("Sign Up Error", error.message);
+                return;
+            }
+
+            if (!data.session) {
+                showAlert(
+                    "Confirm your email",
+                    "Check your email for the confirmation link. You can now log in."
+                );
+                router.push("./auth/logIn");
+            } else {
+                router.push("/auth/SignIn");
+            }
+        } catch (error) {
+            showAlert("Error", error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

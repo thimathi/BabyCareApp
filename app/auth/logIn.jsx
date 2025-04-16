@@ -1,22 +1,92 @@
-import React, { useState } from "react";
-import {View,Text,TextInput,TouchableOpacity,Image,StyleSheet,} from "react-native";
+import React, { useState, useEffect } from "react"; // Make sure useEffect is imported
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "../../constant/Colors";
 import { i18n } from "../utils/i18n";
+import { supabase} from '../../lib/supabase';
+import {Account } from '../../components/Account';
+import { Auth } from '../../components/Auth';
 
-export default function logIn() {
+export default function LogIn() {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleGoogleLogin = () => {
-        console.log("Google Login Clicked");
+   // Fix the useEffect implementation:
+   useEffect(() => {
+    let mounted = true;
+    
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+        if (mounted && event === "SIGNED_IN" && session) {
+            router.replace("/auth/logIn");
+        }
+    });
+
+    return () => {
+        mounted = false;
+        subscription?.unsubscribe();
+    };
+}, [router]);
+
+
+    const showAlert = (title, message) => {
+        Alert.alert(
+            title,
+            message,
+            [{ text: "OK" }],
+            { cancelable: false }
+        );
     };
 
-    const handleLogin = () => {
-        console.log("Email:", email, "Password:", password);
+    const handleGoogleLogin = async () => {
+        setLoading(true);
+        try {
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: `${window.location.origin}/auth/callback`,
+                },
+            });
+            
+            if (error) {
+                showAlert("Google Login Failed", error.message);
+            }
+        } catch (error) {
+            showAlert("Google Login Error", error.message);
+        } finally {
+            setLoading(false);
+        }
     };
+
+    const handleLogin = async () => {
+        if (!email || !password) {
+            showAlert("Validation Error", "Please enter both email and password");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const { error } = await supabase.auth.signInWithPassword({
+                email: email.trim(),
+                password: password,
+            });
+
+            if (error) {
+                showAlert("Login Failed", error.message);
+                return;
+            }
+            
+            // Successful login - navigation handled by auth listener
+        } catch (error) {
+            showAlert("Login Error", error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     return (
         <View style={styles.container}>

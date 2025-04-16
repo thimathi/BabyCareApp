@@ -26,17 +26,31 @@ export const translations = {
       Korean: "Korean"
     },
     forgotPassword: {
-      instruction: "Enter your Email address or Contact number associated with your Baby Mine account.",
-      inputLabel: "E-mail Address or Contact Number",
+      instruction: "Enter your Email address associated with your Baby Mine account.",
+      inputLabel: "E-mail Address",
       inputPlaceholder: "Enter your email",
-      sendButton: "Send The Code"
+      sendButton: "Send The Code",
+      error: "Error",
+      invalidEmail: "Invalid Email",
+      enterValidEmail: "Please enter a valid email address.",
+      otpSent: "OTP Sent",
+      checkEmail: "Check your email for the OTP.",
+      loginSuccess: "Login Successful",
+      loggedIn: "You are now logged in."
     },
     forgotPasswordOTP: {
-      title: "Get your code",
-      instruction: "Please enter the 4 digit code that sent to your E-mail Address or Contact Number",
-      resendPrompt: "If you don't receive a code.",
-      resendLink: "Resend",
-      verifyButton: "Verify"
+      title: "Enter Verification Code",
+      instruction: "Please enter the 6-digit code sent to your email",
+      resendPrompt: "Didn't receive a code?",
+      resendLink: "Resend Code",
+      verifyButton: "Verify",
+      errorTitle: "Error",
+      incompleteOTP: "Please enter the full 6-digit code",
+      otpSent: "New OTP Sent",
+      checkEmail: "Please check your email for the verification code",
+      resendCooldown: "Resend available in {seconds}s",
+      verificationSuccess: "Verification Successful",
+      incorrectOTP: "Incorrect OTP. Please try again"
     },
     passwordResetSuccess: {
       title: "Password reset successful!",
@@ -91,30 +105,51 @@ export const translations = {
       Korean: "කොරියානු"
     },
     forgotPassword: {
-      instruction: "ඔබගේ Baby Mine ගිණුම හා සම්බන්ධ ඊමේල් ලිපිනය හෝ දුරකථන අංකය ඇතුළත් කරන්න.",
-      inputLabel: "ඊමේල් ලිපිනය හෝ දුරකථන අංකය",
+      instruction: "ඔබගේ Baby Mine ගිණුම හා සම්බන්ධ ඊමේල් ලිපිනය ඇතුළත් කරන්න.",
+      inputLabel: "ඊමේල් ලිපිනය",
       inputPlaceholder: "ඔබගේ ඊමේල් ඇතුළත් කරන්න",
-      sendButton: "කේතය යවන්න"
+      sendButton: "කේතය යවන්න",
+      error: "දෝෂය",
+      invalidEmail: "වලංගු නොවන ඊමේල් ලිපිනය",
+      enterValidEmail: "කරුණාකර වලංගු ඊමේල් ලිපිනයක් ඇතුළත් කරන්න.",
+      otpSent: "OTP එවන ලදී",
+      checkEmail: "OTP සඳහා ඔබගේ ඊමේල් පරීක්ෂා කරන්න.",
+      loginSuccess: "පිවිසුම සාර්ථකයි",
+      loggedIn: "ඔබ දැන් පුරනය වී ඇත."
     },
     forgotPasswordOTP: {
-      title: "ඔබගේ කේතය ලබා ගන්න",
-      instruction: "කරුණාකර ඔබගේ ඊමේල් ලිපිනයට හෝ දුරකථන අංකයට යවන ලද ඉලක්කම් 4 කේතය ඇතුළත් කරන්න",
-      resendPrompt: "ඔබට කේතයක් ලැබෙන්නේ නැත්නම්.",
-      resendLink: "නැවත යවන්න",
-      verifyButton: "තහවුරු කරන්න"
+      title: "සත්‍යාපන කේතය ඇතුලත් කරන්න",
+      instruction: "කරුණාකර ඔබගේ ඊමේල් ලිපිනයට එවන ලද 6-ඉලක්කම් කේතය ඇතුලත් කරන්න",
+      resendPrompt: "කේතය ලැබුනේ නැද්ද?",
+      resendLink: "කේතය නැවත යවන්න",
+      verifyButton: "තහවුරු කරන්න",
+      errorTitle: "දෝෂය",
+      incompleteOTP: "කරුණාකර සම්පූර්ණ 6-ඉලක්කම් කේතය ඇතුලත් කරන්න",
+      otpSent: "නව OTP එවන ලදී",
+      checkEmail: "කරුණාකර සත්‍යාපන කේතය සඳහා ඔබගේ ඊමේල් පරීක්ෂා කරන්න",
+      resendCooldown: "නැවත යැවීමට {seconds}ක් ගතවේ",
+      verificationSuccess: "සත්‍යාපනය සාර්ථකයි",
+      incorrectOTP: "වැරදි OTP. කරුණාකර නැවත උත්සාහ කරන්න"
     },
     passwordResetSuccess: {
       title: "මුරපදය යළි සැකසීම සාර්ථකයි!",
       message: "අනාගත පිවිසුම් සඳහා කරුණාකර ඔබගේ නව මුරපදය භාවිතා කරන්න."
     },
     resetPassword: {
-      title: "ඔබගේ මුරපදය යළි සකසන්න",
-      instruction: "පෙර මුරපදය යළි සැකසීම සඳහා නව මුරපදයක් ඇතුළත් කරන්න",
+      title: "මුරපදය යළි සැකසීම",
+      instruction: "ඔබගේ මුරපදය යළි සැකසීම සඳහා නව මුරපදයක් ඇතුළත් කරන්න",
       newPasswordLabel: "නව මුරපදය",
       newPasswordPlaceholder: "ඔබගේ නව මුරපදය ඇතුළත් කරන්න",
       confirmPasswordLabel: "මුරපදය තහවුරු කරන්න",
-      confirmPasswordPlaceholder: "ඔබගේ මුරපදය ඇතුළත් කරන්න",
-      resetButton: "මුරපදය යළි සකසන්න"
+      confirmPasswordPlaceholder: "ඔබගේ නව මුරපදය තහවුරු කරන්න",
+      resetButton: "මුරපදය යළි සැකසීම",
+      errorTitle: "දෝෂය",
+      successTitle: "සාර්ථකයි",
+      successMessage: "ඔබගේ මුරපදය සාර්ථකව යළි සැකසී ඇත",
+      fillAllFields: "කරුණාකර සියලු ක්ෂේත්ර පුරවන්න",
+      passwordsDontMatch: "මුරපද ගැලපෙන්නේ නැත",
+      passwordLength: "මුරපදය අක්ෂර 6ක් හෝ ඊට වැඩි විය යුතුය",
+      generalError: "මුරපදය යළි සැකසීමේදී දෝෂයක් ඇතිවිය"
     },
     signIn: {
       signIn: "ඇතුල් වන්න",
@@ -156,30 +191,51 @@ export const translations = {
       Korean: "கொரியன்"
     },
     forgotPassword: {
-      instruction: "உங்கள் Baby Mine கணக்குடன் தொடர்புடைய மின்னஞ்சல் முகவரி அல்லது தொடர்பு எண்ணை உள்ளிடவும்.",
-      inputLabel: "மின்னஞ்சல் முகவரி அல்லது தொடர்பு எண்",
+      instruction: "உங்கள் Baby Mine கணக்குடன் தொடர்புடைய மின்னஞ்சல் முகவரியை உள்ளிடவும்.",
+      inputLabel: "மின்னஞ்சல் முகவரி",
       inputPlaceholder: "உங்கள் மின்னஞ்சலை உள்ளிடவும்",
-      sendButton: "குறியீட்டை அனுப்பவும்"
+      sendButton: "குறியீட்டை அனுப்பவும்",
+      error: "பிழை",
+      invalidEmail: "தவறான மின்னஞ்சல்",
+      enterValidEmail: "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்.",
+      otpSent: "OTP அனுப்பப்பட்டது",
+      checkEmail: "OTPக்கு உங்கள் மின்னஞ்சலை சரிபார்க்கவும்.",
+      loginSuccess: "உள்நுழைவு வெற்றிகரமானது",
+      loggedIn: "நீங்கள் இப்போது உள்நுழைந்துள்ளீர்கள்."
     },
     forgotPasswordOTP: {
-      title: "உங்கள் குறியீட்டைப் பெறவும்",
-      instruction: "உங்கள் மின்னஞ்சல் முகவரிக்கு அல்லது தொடர்பு எண்ணுக்கு அனுப்பப்பட்ட 4 இலக்க குறியீட்டை உள்ளிடவும்",
-      resendPrompt: "உங்களுக்கு குறியீடு வந்தால்.",
-      resendLink: "மீண்டும் அனுப்பவும்",
-      verifyButton: "சரிபார்க்கவும்"
+      title: "சரிபார்ப்பு குறியீட்டை உள்ளிடவும்",
+      instruction: "உங்கள் மின்னஞ்சலுக்கு அனுப்பப்பட்ட 6-இலக்க குறியீட்டை உள்ளிடவும்",
+      resendPrompt: "குறியீடு கிடைக்கவில்லையா?",
+      resendLink: "குறியீட்டை மீண்டும் அனுப்பவும்",
+      verifyButton: "சரிபார்க்கவும்",
+      errorTitle: "பிழை",
+      incompleteOTP: "முழு 6-இலக்க குறியீட்டை உள்ளிடவும்",
+      otpSent: "புதிய OTP அனுப்பப்பட்டது",
+      checkEmail: "சரிபார்ப்பு குறியீட்டிற்கு உங்கள் மின்னஞ்சலை சரிபார்க்கவும்",
+      resendCooldown: "மீண்டும் அனுப்ப {seconds}வினாடிகளில்",
+      verificationSuccess: "சரிபார்ப்பு வெற்றிகரமாக உள்ளது",
+      incorrectOTP: "தவறான OTP. மீண்டும் முயற்சிக்கவும்"
     },
     passwordResetSuccess: {
       title: "கடவுச்சொல் மீட்டமைப்பு வெற்றிகரமாக உள்ளது!",
       message: "எதிர்கால உள்நுழைவுகளுக்கு உங்கள் புதிய கடவுச்சொல்லைப் பயன்படுத்தவும்."
     },
     resetPassword: {
-      title: "உங்கள் கடவுச்சொல்லை மீட்டமைக்கவும்",
-      instruction: "உங்கள் முந்தைய கடவுச்சொல்லை மீட்டமைக்க புதிய கடவுச்சொல்லை உள்ளிடவும்",
+      title: "கடவுச்சொல்லை மீட்டமைக்கவும்",
+      instruction: "உங்கள் கடவுச்சொல்லை மீட்டமைக்க புதிய கடவுச்சொல்லை உள்ளிடவும்",
       newPasswordLabel: "புதிய கடவுச்சொல்",
       newPasswordPlaceholder: "உங்கள் புதிய கடவுச்சொல்லை உள்ளிடவும்",
       confirmPasswordLabel: "கடவுச்சொல்லை உறுதிப்படுத்தவும்",
-      confirmPasswordPlaceholder: "உங்கள் கடவுச்சொல்லை உள்ளிடவும்",
-      resetButton: "கடவுச்சொல்லை மீட்டமைக்கவும்"
+      confirmPasswordPlaceholder: "உங்கள் புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்",
+      resetButton: "கடவுச்சொல்லை மீட்டமைக்கவும்",
+      errorTitle: "பிழை",
+      successTitle: "வெற்றி",
+      successMessage: "உங்கள் கடவுச்சொல் வெற்றிகரமாக மீட்டமைக்கப்பட்டது",
+      fillAllFields: "தயவு செய்து அனைத்து வெற்றிடங்களையும் நிரப்பவும்",
+      passwordsDontMatch: "கடவுச்சொற்கள் பொருந்தவில்லை",
+      passwordLength: "கடவுச்சொல் குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்",
+      generalError: "கடவுச்சொல்லை மீட்டமைக்கும் போது பிழை ஏற்பட்டது"
     },
     signIn: {
       signIn: "உள்நுழை",
@@ -221,17 +277,31 @@ export const translations = {
       Korean: "한국어"
     },
     forgotPassword: {
-      instruction: "Baby Mine 계정과 연결된 이메일 주소 또는 연락처 번호를 입력하세요.",
-      inputLabel: "이메일 주소 또는 연락처 번호",
+      instruction: "Baby Mine 계정과 연결된 이메일 주소를 입력하세요.",
+      inputLabel: "이메일 주소",
       inputPlaceholder: "이메일을 입력하세요",
-      sendButton: "코드 보내기"
+      sendButton: "코드 보내기",
+      error: "오류",
+      invalidEmail: "잘못된 이메일",
+      enterValidEmail: "유효한 이메일 주소를 입력하세요.",
+      otpSent: "OTP 전송됨",
+      checkEmail: "OTP를 확인하려면 이메일을 확인하세요.",
+      loginSuccess: "로그인 성공",
+      loggedIn: "지금 로그인되었습니다."
     },
     forgotPasswordOTP: {
-      title: "코드 받기",
-      instruction: "이메일 주소 또는 연락처 번호로 전송된 4자리 코드를 입력하세요",
-      resendPrompt: "코드를 받지 못한 경우.",
-      resendLink: "재전송",
-      verifyButton: "확인"
+      title: "인증 코드 입력",
+      instruction: "이메일로 전송된 6자리 코드를 입력하세요",
+      resendPrompt: "코드를 받지 못하셨나요?",
+      resendLink: "코드 재전송",
+      verifyButton: "확인",
+      errorTitle: "오류",
+      incompleteOTP: "6자리 코드를 모두 입력하세요",
+      otpSent: "새 OTP 전송됨",
+      checkEmail: "인증 코드를 확인하려면 이메일을 확인하세요",
+      resendCooldown: "{seconds}초 후 재전송 가능",
+      verificationSuccess: "인증 성공",
+      incorrectOTP: "잘못된 OTP입니다. 다시 시도하세요"
     },
     passwordResetSuccess: {
       title: "비밀번호 재설정 성공!",
@@ -239,12 +309,19 @@ export const translations = {
     },
     resetPassword: {
       title: "비밀번호 재설정",
-      instruction: "이전 비밀번호를 재설정하려면 새 비밀번호를 입력하세요",
+      instruction: "새 비밀번호를 입력하여 비밀번호를 재설정하세요",
       newPasswordLabel: "새 비밀번호",
       newPasswordPlaceholder: "새 비밀번호를 입력하세요",
       confirmPasswordLabel: "비밀번호 확인",
-      confirmPasswordPlaceholder: "비밀번호를 입력하세요",
-      resetButton: "비밀번호 재설정"
+      confirmPasswordPlaceholder: "새 비밀번호를 다시 입력하세요",
+      resetButton: "비밀번호 재설정",
+      errorTitle: "오류",
+      successTitle: "성공",
+      successMessage: "비밀번호가 성공적으로 재설정되었습니다",
+      fillAllFields: "모든 필드를 채워주세요",
+      passwordsDontMatch: "비밀번호가 일치하지 않습니다",
+      passwordLength: "비밀번호는 최소 6자 이상이어야 합니다",
+      generalError: "비밀번호 재설정 중 오류가 발생했습니다"
     },
     signIn: {
       signIn: "로그인",

@@ -9,8 +9,8 @@ export default function PasswordRestSuccessful() {
 
     useEffect(() => {
         setTimeout(() => {
-            router.push("./..//./index.tsx");
-        }, 2000);
+            router.push("/auth/logIn");
+        }, 3000);
     }, []);
     return (
         <View style={styles.container}>
