@@ -26,7 +26,7 @@ The **Baby Care Mobile Application** is a comprehensive digital parenting assist
 - **Backend:** AWS Amplify (Auth, API, Storage)
 - **State Management:** Redux
 - **Navigation:** React Navigation
-- **Database:** AWS RDS (PostgreSQL/MySQL)
+- **Database:** SuperBase
 - **Push Notifications:** AWS SNS
 
 ### Web Admin Panel
