@@ -1,99 +1,145 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react"; // Make sure useEffect is imported
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
-import Colors from "../../constant/Colors";
+import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import {router, useRouter} from 'expo-router';
+import Colors from "../../constant/Colors";
+import { i18n } from "../utils/i18n";
+import { supabase} from '../../lib/supabase';
 
-// Initialize Google Sign-In
-GoogleSignin.configure({
-    webClientId: 'YOUR_GOOGLE_WEB_CLIENT_ID', // Get this from Firebase Console
-});
-
-
-export default function logIn() {
-    const [email, setEmail] = useState('mom');
-    const [password, setPassword] = useState('123');
+export default function LogIn() {
+    const router = useRouter();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleLogin = async () => {
-        if (!email || !password) {
-            Alert.alert('Error', 'Please enter both email and password.');
-            return;
-        }
+   // Fix the useEffect implementation:
+   useEffect(() => {
+    let mounted = true;
+    
 
-        // **Offline Bypass Login**
-        if (email === "mom" && password === "123") {
-            Alert.alert('Success', 'Logged in offline!');
-            router.replace('./../../OnboardingScreen1'); // Navigate to Home screen
-            return;
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+        if (mounted && event === "SIGNED_IN" && session) {
+            router.replace("./../OnboardingScreen1")
         }
+    });
 
-        // Firebase Authentication
+    return () => {
+        mounted = false;
+        subscription?.unsubscribe();
+    };
+}, [router]);
+
+    const showAlert = (title, message) => {
+        Alert.alert(
+            title,
+            message,
+            [{ text: "OK" }],
+            { cancelable: false }
+        );
+    };
+
+    const handleGoogleLogin = async () => {
         setLoading(true);
         try {
-            await auth().signInWithEmailAndPassword(email, password);
-            Alert.alert('Success', 'Logged in successfully!');
-            router.replace('./../../OnboardingScreen1');
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: `${window.location.origin}/auth/callback`,
+                },
+            });
+            
+            if (error) {
+                showAlert("Google Login Failed", error.message);
+            }
         } catch (error) {
-            Alert.alert('Login Failed', error.message);
+            showAlert("Google Login Error", error.message);
         } finally {
             setLoading(false);
         }
     };
 
-    // Handle Google Login
-    const handleGoogleLogin = async () => {
+    const handleLogin = async () => {
+        if (!email || !password) {
+            showAlert("Validation Error", "Please enter both email and password");
+            return;
+        }
+
+        setLoading(true);
         try {
-            await GoogleSignin.hasPlayServices();
-            const { idToken } = await GoogleSignin.signIn();
-            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-            await auth().signInWithCredential(googleCredential);
-            Alert.alert('Success', 'Logged in with Google!');
-            router.replace('./../../OnboardingScreen1.jxs');
+            const { error } = await supabase.auth.signInWithPassword({
+                email: email.trim(),
+                password: password,
+            });
+
+            if (error) {
+                showAlert("Login Failed", error.message);
+                return;
+            }// Successful login - navigation handled by auth listener
+
         } catch (error) {
-            Alert.alert('Google Login Failed', error.message);
+            showAlert("Login Error", error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
+
     return (
         <View style={styles.container}>
-            <Image source={require("../../assets/images/Baby mine logo-01.png")} style={styles.logo} />
-            <Text style={styles.title}>Log In</Text>
+            <Image
+                source={require("../../assets/images/Baby mine logo-01.png")}
+                style={styles.logo}
+            />
+            <Text style={styles.title}>{i18n.t('login.title')}</Text>
 
             <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
                 <FontAwesome name="google" size={20} color="black" style={styles.googleIcon} />
-                <Text style={styles.googleText}>Continue with Google</Text>
+                <Text style={styles.googleText}>{i18n.t('login.googleButton')}</Text>
             </TouchableOpacity>
 
             <View style={styles.separatorContainer}>
                 <View style={styles.separator} />
-                <Text style={styles.orText}>OR</Text>
+                <Text style={styles.orText}>{i18n.t('login.orSeparator')}</Text>
                 <View style={styles.separator} />
             </View>
 
-            <Text style={styles.label}>E-mail</Text>
-            <TextInput style={styles.input} placeholder="Enter your email" keyboardType="email-address" value={email} onChangeText={setEmail} />
+            <Text style={styles.label}>{i18n.t('login.emailLabel')}</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={i18n.t('login.emailPlaceholder')}
+                keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
+            />
 
-            <Text style={styles.label}>Password</Text>
-            <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry value={password} onChangeText={setPassword} />
+            <Text style={styles.label}>{i18n.t('login.passwordLabel')}</Text>
+            <TextInput
+                style={styles.input}
+                placeholder={i18n.t('login.passwordPlaceholder')}
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
+            />
 
             <TouchableOpacity onPress={() => router.push("./FogotPassword")}>
-                <Text style={styles.forgotPassword}>Forgotten password?</Text>
+                <Text style={styles.forgotPassword}>{i18n.t('login.forgotPassword')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginText}>Log In</Text>
+                <Text style={styles.loginText}>{i18n.t('login.title')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => router.push("./SignIn")}>
-                <Text style={styles.signUpText}>Already haven't an account? <Text style={styles.signUpLink}>Sign Up</Text></Text>
+                <Text style={styles.signUpText}>
+                    {i18n.t('login.signUpText')} <Text style={styles.signUpLink}>{i18n.t('login.signUpLink')}</Text>
+                </Text>
             </TouchableOpacity>
         </View>
     );
 }
 
-// Styles
+
+// Styles remain exactly the same as your original
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -121,7 +167,7 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 20,
         borderRadius: 10,
-        width: "80%",
+        width: "90%",
         justifyContent: "center",
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
@@ -196,4 +242,3 @@ const styles = StyleSheet.create({
         color: Colors.PRIMARY,
     },
 });
-

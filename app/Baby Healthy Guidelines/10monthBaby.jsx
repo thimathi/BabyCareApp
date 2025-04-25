@@ -1,5 +1,5 @@
 
-import {View, Text, Image, StyleSheet, ScrollView, TouchableOpacity,} from "react-native";
+import {View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Linking,} from "react-native";
 import Colors from "../../constant/Colors";
 import React from "react";
 import colors from "../../constant/Colors";
@@ -28,7 +28,9 @@ export default function _7monthBaby() {
                     <View style={styles.ColumnContainer}>
                         <Text style={styles.title}>10-12 Month Baby</Text>
                         <Text style={styles.details}>Read More..</Text>
-                        <TouchableOpacity style={styles.button} onPress={() => router.push("./SignIn")}>Download</TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => {
+                            Linking.openURL(`https://www.google.com/maps/search/?api=1&query=india`)
+                        }}>Download</TouchableOpacity>
                     </View>
                     <MaterialIcons name="more-vert" size={24} color="gray" />
                 </View>

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import {View,Text,TextInput,TouchableOpacity,Image,StyleSheet,} from "react-native";
+import React, { useState, useEffect } from "react"; // Make sure useEffect is imported
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "../../constant/Colors"; // For Google Icon
+import { i18n } from "../utils/i18n";
+
+import { supabase } from "../../lib/supabase";
 
 export default function SignIn() {
     const router = useRouter();
@@ -10,13 +13,88 @@ export default function SignIn() {
     const [email, setEmail] = useState("");
     const [createPassword, setCreatePassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleGoogleLogin = () => {
-        console.log("Google LogSignin Clicked");
+    const showAlert = (title, message) => {
+        Alert.alert(
+            title,
+            message,
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+        );
     };
 
-    const handleSignin = () => {
-        console.log("userName:",userName,"Email:", email, "createPassword:", createPassword,"confirmPassword:", confirmPassword);
+        const handleGoogleLogin = async () => {
+            setLoading(true);
+            try {
+                const { error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: `${window.location.origin}/auth/callback`,
+                    },
+                });
+                
+                if (error) {
+                    showAlert("Google Login Failed", error.message);
+                }
+            } catch (error) {
+                showAlert("Google Login Error", error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+
+    const handleSignin = async () => {
+        // Validation checks
+        if (!userName || !email || !createPassword || !confirmPassword) {
+            showAlert("Error", "Please fill all fields");
+            return;
+        }
+
+        if (createPassword !== confirmPwassword) {
+            showAlert("Error", "Passwords don't match");
+            return;
+        }
+
+        if (createPassword.length < 6) {
+            showAlert("Error", "Password should be at least 6 characters");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email: email.trim(),
+                password: createPassword,
+                options: {
+                    data: {
+                        username: userName
+                    }
+                }
+            });
+
+            if (error) {
+                showAlert("Sign Up Error", error.message);
+                return;
+            }
+
+            if (!data.session) {
+                showAlert(
+                    "Confirm your email",
+                    "Check your email for the confirmation link. You can now log in."
+                );
+                router.push("./auth/logIn");
+            } else {
+                router.push("/auth/SignIn");
+            }
+        } catch (error) {
+            showAlert("Error", error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -26,58 +104,58 @@ export default function SignIn() {
                 source={require("../../assets/images/Baby mine logo-01.png")}
                 style={styles.logo}
             />
-            <Text style={styles.title}>Sign In</Text>
+            <Text style={styles.title}>{i18n.t('signIn.signIn')}</Text>
 
 
             <TouchableOpacity style={styles.googleButton} onPress={handleGoogleLogin}>
                 <FontAwesome name="google" size={20} color="black" style={styles.googleIcon} />
-                <Text style={styles.googleText}>Continue with Google</Text>
+                <Text style={styles.googleText}>{i18n.t('signIn.continueWithGoogle')}</Text>
             </TouchableOpacity>
 
             <View style={styles.separatorContainer}>
                 <View style={styles.separator} />
-                <Text style={styles.orText}>OR</Text>
+                <Text style={styles.orText}>{i18n.t('signIn.or')}</Text>
                 <View style={styles.separator} />
             </View>
 
             <View style={styles.separatorContainer}>
                 <View style={styles.separator} />
-                <Text style={styles.orText}>Create your own account</Text>
+                <Text style={styles.orText}>{i18n.t('signIn.createAccount')}</Text>
                 <View style={styles.separator} />
             </View>
 
             <View style={styles.formContainer}>
 
-            <Text style={styles.label}>User Name</Text>
+            <Text style={styles.label}>{i18n.t('signIn.username')}</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Enter your User name"
+                placeholder={i18n.t('signIn.username')}
                 keyboardType="username-address"
                 value={userName}
                 onChangeText={setUserName}
             />
-            <Text style={styles.label}>E-mail</Text>
+            <Text style={styles.label}>{i18n.t('signIn.email')}</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Enter your email"
+                placeholder={i18n.t('signIn.email')}
                 keyboardType="email-address"
                 value={email}
                 onChangeText={setEmail}
             />
 
-            <Text style={styles.label}>Create Password</Text>
+            <Text style={styles.label}>{i18n.t('signIn.createPassword')}</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Enter your password"
+                placeholder={i18n.t('signIn.createPassword')}
                 secureTextEntry
                 value={createPassword}
                 onChangeText={setCreatePassword}
             />
 
-            <Text style={styles.label}>Conform Password</Text>
+            <Text style={styles.label}>{i18n.t('signIn.confirmPassword')}</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Enter your password"
+                placeholder={i18n.t('signIn.confirmPassword')}
                 secureTextEntry
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
@@ -87,17 +165,17 @@ export default function SignIn() {
 
             {/* Forgotten Password */}
             <TouchableOpacity onPress={() => router.push("./FogotPassword")}>
-                <Text style={styles.forgotPassword}>Forgotten password?</Text>
+                <Text style={styles.forgotPassword}>{i18n.t('signIn.forgotPassword')}</Text>
             </TouchableOpacity>
 
             {/* SignIn Button */}
             <TouchableOpacity style={styles.SignInButton} onPress={handleSignin}>
-                <Text style={styles.SignInText}>Sign In</Text>
+                <Text style={styles.SignInText}>{i18n.t('signIn.signIn')}</Text>
             </TouchableOpacity>
 
             {/* Sign Up Link */}
             <TouchableOpacity onPress={() => router.push("./logIn")}>
-                <Text style={styles.logInText}>Already have an account? <Text style={styles.LoginLink}>Log In</Text></Text>
+                <Text style={styles.logInText}>{i18n.t('signIn.alreadyHaveAccount')} <Text style={styles.LoginLink}>{i18n.t('signIn.login')}</Text></Text>
             </TouchableOpacity>
         </View>
     );

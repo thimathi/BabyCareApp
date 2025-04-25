@@ -2,14 +2,15 @@ import React, {useEffect, useState} from "react";
 import {View,Text,Image,ActivityIndicator,StyleSheet} from "react-native";
 import {router, useRouter} from "expo-router";
 import Colors from "../../constant/Colors";
+import { i18n } from "../utils/i18n";
 
 export default function PasswordRestSuccessful() {
     const router = useRouter();
 
     useEffect(() => {
         setTimeout(() => {
-            router.push("./..//./index.tsx");
-        }, 2000);
+            router.push("/auth/logIn");
+        }, 3000);
     }, []);
     return (
         <View style={styles.container}>
@@ -18,9 +19,9 @@ export default function PasswordRestSuccessful() {
                 source={require("../../assets/images/success baby.png")}
                 style={styles.image}
             />
-            <Text style={styles.title}>Password reset successful!</Text>
+            <Text style={styles.title}>{i18n.t('passwordResetSuccess.title')}</Text>
 
-            <Text style={styles.label}>Please use your new password for future logins.</Text>
+            <Text style={styles.label}>{i18n.t('passwordResetSuccess.message')}</Text>
         </View>
     );
 }

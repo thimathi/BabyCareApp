@@ -1,9 +1,9 @@
 import {Text, View} from "react-native";
 import OnboardingScreen1 from "./OnboardingScreen1";
 
-export default function GuidanceAndMorale() {
+export default function onboardingScreen1() {
     return (
-        <div >
+        <div>
             <OnboardingScreen1 />
         </div>
     );

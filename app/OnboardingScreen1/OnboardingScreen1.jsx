@@ -32,17 +32,17 @@ const slides = [
     },
     {
         key: '3',
-        title: 'Read Babe Healthy Guidance',
+        title: 'Read New Postpartum care',
         image: require('../../assets/images/114138-conversation.gif'),
     },
     {
         key: '3',
-        title: 'Read Babe Healthy Guidance',
+        title: 'Feel free with the pregnancy and mom roll with baby care',
         image: require('../../assets/images/114138-conversation.gif'),
     },
     {
         key: '3',
-        title: 'Read Babe Healthy Guidance',
+        title: 'Grow up your childed better healhty.',
         image: require('../../assets/images/114138-conversation.gif'),
     },
 ];
@@ -61,7 +61,8 @@ const OnboardingScreen1 = () => {
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
     const skip = () => {
-        router.push('./Step1ParentInfo');
+        // Correct the path to use "/Step1/ParentInfo" instead of "Step1ParentInfo"
+        router.push("./../mother-registation/step-1-parent-info");
     };
 
     const renderItem = ({ item }) => (
