@@ -3,8 +3,27 @@ import {View, Text, Image, Button, StyleSheet, TouchableOpacity} from 'react-nat
 import Colors from "../../../constant/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { insertSubscriptionInfo } from './Step5BackEnd';
 
 export default function Step5Success({ navigation }) {
+    const { user_id } = useLocalSearchParams();
+
+    useEffect(() => {
+        const subscribeUser = async () => {
+            const result = await insertSubscriptionInfo({}, user_id);
+            if (!result.success) {
+                Alert.alert("Error", "Failed to save subscription information.");
+            } else {
+                console.log("Subscription info saved successfully.");
+            }
+        };
+
+        if (user_id) {
+            subscribeUser();
+        }
+    }, [user_id]);
+
     return (
         <View style={styles.container}>
 
@@ -14,6 +33,9 @@ export default function Step5Success({ navigation }) {
                 style={{ width: 200, height: 200 }}
             />
             <Text style={styles.title}>Congratulations</Text>
+            <Image
+                source={require('../../../assets/images/Process Success.gif')}
+                style={{ 60: 100, height: 60, borderRadius:100, }}/>
             <Text style={styles.label}>Registration Successful!</Text>
             <TouchableOpacity style={styles.Button} onPress={() => router.push("./../../Main-Interfaces/mom-home/MomHome")}>
                 <Text style={styles.Buttontext}>Next</Text>

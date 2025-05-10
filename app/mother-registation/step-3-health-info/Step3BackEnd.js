@@ -8,7 +8,9 @@ export const insertParentInfo = async (formData, user_id) => {
             bloodGroup: formData.bloodGroup,
             existingConditions: formData.existingConditions,
             allergies: formData.allergies,
+            subscription_plan: "FREE",
             medications: formData.medications,
+
         })
         .eq("user_id", user_id)
         .select("user_id")

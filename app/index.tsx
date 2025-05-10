@@ -9,7 +9,7 @@ export  default function Index(){
 
     useEffect(() => {
         setTimeout(() => {
-            router.push("/auth/Translate");
+            router.push("./auth/translate-ui");
         }, 2000);
     }, []);
 
@@ -20,6 +20,7 @@ export  default function Index(){
                 flex: 1,
                 backgroundColor: Colors.SECONDARY,
                 paddingTop: 120,
+                paddingBottom:20,
                 alignItems: "center",
             }}
         >
@@ -53,7 +54,7 @@ export  default function Index(){
 
             {/* Background Image */}
             <Image
-                source={require('./../assets/images/f987fadbac680ed7167c947985eafcd4_upscayl_4x_realesrgan-x4plus-anime.jpg')}
+                source={require('./../assets/images/holdHand.jpg')}
                 style={{
                     flex: 1,
                     width: "100%",

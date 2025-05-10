@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Alert,SafeAreaView } from 'react-native';
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import Colors from "../../../constant/Colors";
+import { Ionicons, } from "@expo/vector-icons";
+
 import { insertParentInfo } from "../step-3-health-info/Step3BackEnd";
 
 export default function Step3HealthInfo() {
@@ -34,89 +36,101 @@ export default function Step3HealthInfo() {
         };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                                <TouchableOpacity onPress={() => router.push("./../../mother-registation/step-2-pregnancy-info")}>
-                    <MaterialIcons name="arrow-back" size={24} color="black" />
-                </TouchableOpacity>
-                
-                <Text style={styles.headerTitle}>Mother Registration</Text>
-                <View style={{ width: 24 }} /> {/* Spacer for alignment */}
-            </View>
+        <SafeAreaView style={styles.container}>
+            
 
-            <ScrollView contentContainerStyle={styles.content}>
-                <Text style={styles.sectionTitle}>Health Information</Text>
-                
-                <View style={styles.formGroup}>
-                    <Text style={styles.label}>Blood Group*</Text>
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder="e.g. O+"
-                        value={formData.bloodGroup}
-                        onChangeText={(text) => handleChange('bloodGroup', text)}
-                    />
+                <View style={styles.header}>
+                    <TouchableOpacity
+                        onPress={() => router.push("./../step-2-pregnancy-info")} >
+                        <Ionicons name="chevron-back" size={24} color="#fff" />
+                    </TouchableOpacity><Text style={styles.headerText}>Mother Registration</Text>
                 </View>
+                <View style={styles.cardSection}>
+                    <ScrollView contentContainerStyle={styles.content}>
+                        <Text style={styles.sectionTitle}>Health Information</Text>
 
-                <View style={styles.formGroup}>
-                    <Text style={styles.label}>Existing Medical Conditions</Text>
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder="e.g. Diabetes, Hypertension"
-                        value={formData.existingConditions}
-                        onChangeText={(text) => handleChange('existingConditions', text)}
-                    />
+                        <View style={styles.formGroup}>
+                            <Text style={styles.label}>Blood Group*</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="e.g. O+"
+                                value={formData.bloodGroup}
+                                onChangeText={(text) => handleChange('bloodGroup', text)}
+                            />
+                        </View>
+
+                        <View style={styles.formGroup}>
+                            <Text style={styles.label}>Existing Medical Conditions</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="e.g. Diabetes, Hypertension"
+                                value={formData.existingConditions}
+                                onChangeText={(text) => handleChange('existingConditions', text)}
+                            />
+                        </View>
+
+                        <View style={styles.formGroup}>
+                            <Text style={styles.label}>Allergies</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="e.g. Penicillin, Nuts"
+                                value={formData.allergies}
+                                onChangeText={(text) => handleChange('allergies', text)}
+                            />
+                        </View>
+
+                        <View style={styles.formGroup}>
+                            <Text style={styles.label}>Current Medications</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="e.g. Insulin, Antihypertensives"
+                                value={formData.medications}
+                                onChangeText={(text) => handleChange('medications', text)}
+                            />
+                        </View>
+
+                        <TouchableOpacity
+                            style={styles.nextButton}
+                            onPress={handleNext}
+                            activeOpacity={0.8}
+                        >
+                            <Text style={styles.nextButtonText}>Continue</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
                 </View>
+        </SafeAreaView>
 
-                <View style={styles.formGroup}>
-                    <Text style={styles.label}>Allergies</Text>
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder="e.g. Penicillin, Nuts"
-                        value={formData.allergies}
-                        onChangeText={(text) => handleChange('allergies', text)}
-                    />
-                </View>
-
-                <View style={styles.formGroup}>
-                    <Text style={styles.label}>Current Medications</Text>
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder="e.g. Insulin, Antihypertensives"
-                        value={formData.medications}
-                        onChangeText={(text) => handleChange('medications', text)}
-                    />
-                </View>
-
-                <TouchableOpacity 
-                    style={styles.nextButton} 
-                    onPress={handleNext}
-                    activeOpacity={0.8}
-                >
-                    <Text style={styles.nextButtonText}>Continue</Text>
-                </TouchableOpacity>
-            </ScrollView>
-        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.PRIMARY,
+        paddingHorizontal: 20,
+        paddingTop: 20,
     },
     header: {
+        backgroundColor: Colors.PRIMARY,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 20,
-        backgroundColor: Colors.SECONDARY,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
     },
-    headerTitle: {
-        fontSize: 18,
+    headerText: {
+        color: '#fff',
+        fontSize: 20,
         fontWeight: 'bold',
-        color: Colors.PRIMARY,
+        marginLeft: 10,
+    },
+    cardSection: {
+        backgroundColor: '#fff',
+        padding: 15,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        marginTop: 20,
     },
     content: {
         padding: 20,

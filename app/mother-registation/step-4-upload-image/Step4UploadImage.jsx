@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  Pressable,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-  ActivityIndicator,
-  Platform,
-} from "react-native";
+import { View, Text, Image, Pressable, StyleSheet, Alert, TouchableOpacity, ActivityIndicator, Platform, SafeAreaView, ScrollView,} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import Colors from "../../../constant/Colors";
@@ -18,6 +8,8 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { supabase } from "../../../lib/supabase";
 import { insertParentInfo } from "./Step4BackEnd";
 import { v4 as uuidv4 } from "uuid";
+import { Ionicons, } from "@expo/vector-icons";
+
 
 export default function UploadImageScreen() {
   const [image, setImage] = useState(null);
@@ -105,7 +97,11 @@ export default function UploadImageScreen() {
 
       if (response.success) {
         Alert.alert("Success", "Profile photo saved!");
-        router.push("./../../mother-registation/step-5-success");
+        router.push({
+          pathname: "./../../mother-registation/step-5-success",
+          params: { user_id: userId },
+        });
+
       } else {
         Alert.alert("Update Failed", "Could not update user information.");
       }
@@ -118,89 +114,102 @@ export default function UploadImageScreen() {
   };
 
   return (
-    <View>
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() =>
-            router.push("./../../mother-registation/step-3-health-info")
-          }
-        >
-          <MaterialIcons name="arrow-back" size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Create Parent Account</Text>
-        <MaterialIcons name="more-vert" size={24} color="black" />
-      </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView >
 
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={
-              image
-                ? { uri: image }
-                : require("./../../../assets/images/mom1.png") // Add your placeholder image
-            }
-            style={styles.profileImage}
-          />
+        <View style={styles.header}>
           <TouchableOpacity
-            style={styles.editIcon}
-            onPress={pickImageFromGallery}
-          >
-            <MaterialIcons name="edit" size={20} color="#fff" />
-          </TouchableOpacity>
+            onPress={() => router.push("./../../mother-registation/step-3-health-info ")} >
+            <Ionicons name="chevron-back" size={24} color="#fff" />
+          </TouchableOpacity><Text style={styles.headerText}>Create Parent Account</Text>
+        </View>
+        <View style={styles.cardSection}>
+          
+            <View style={styles.imageContainer}>
+              <Image
+                source={
+                  image
+                    ? { uri: image }
+                    : require("./../../../assets/images/mom1.png") // Add your placeholder image
+                }
+                style={styles.profileImage}
+              />
+              <TouchableOpacity
+                style={styles.editIcon}
+                onPress={pickImageFromGallery}
+              >
+                <MaterialIcons name="edit" size={20} color="#fff" />
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.actions}>
+              <Pressable onPress={takePhotoWithCamera} style={styles.iconButton}>
+                <MaterialCommunityIcons name="camera" size={30} color="#800080" />
+              </Pressable>
+              <Pressable onPress={pickImageFromGallery} style={styles.iconButton}>
+                <MaterialCommunityIcons name="image" size={30} color="#800080" />
+              </Pressable>
+            </View>
+
+            <View style={styles.guidelines}>
+              <Text style={styles.guidelineText}>• Max file size: 5Mb</Text>
+              <Text style={styles.guidelineText}>
+                • Allowed formats: JPG, PNG, JPEG
+              </Text>
+              <Text style={styles.guidelineText}>
+                • Ensure stable internet connection
+              </Text>
+            </View>
+
+            <TouchableOpacity style={styles.nextButton} onPress={handleSave}>
+              {uploading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.nextText}>Save</Text>
+              )}
+            </TouchableOpacity>
+          
+
+
         </View>
 
-        <View style={styles.actions}>
-          <Pressable onPress={takePhotoWithCamera} style={styles.iconButton}>
-            <MaterialCommunityIcons name="camera" size={30} color="#800080" />
-          </Pressable>
-          <Pressable onPress={pickImageFromGallery} style={styles.iconButton}>
-            <MaterialCommunityIcons name="image" size={30} color="#800080" />
-          </Pressable>
-        </View>
 
-        <View style={styles.guidelines}>
-          <Text style={styles.guidelineText}>• Max file size: 5Mb</Text>
-          <Text style={styles.guidelineText}>
-            • Allowed formats: JPG, PNG, JPEG
-          </Text>
-          <Text style={styles.guidelineText}>
-            • Ensure stable internet connection
-          </Text>
-        </View>
+      </ScrollView>
 
-        <TouchableOpacity style={styles.nextButton} onPress={handleSave}>
-          {uploading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.nextText}>Save</Text>
-          )}
-        </TouchableOpacity>
-      </View>
-    </View>
+    </SafeAreaView>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fdf0f6",
-    alignItems: "center",
-    paddingTop: 60,
+    backgroundColor: Colors.PRIMARY,
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingTop: 20,
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 10,
-    padding: 20,
-    backgroundColor: Colors.SECONDARY,
-    justifyContent: "space-between",
+    backgroundColor: Colors.PRIMARY,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: colors.BLUE1,
+  headerText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  cardSection: {
+    backgroundColor: '#fff',
+    padding: 15,
+    alignItems: 'center',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    marginTop: 20,
   },
 
   imageContainer: {
@@ -235,7 +244,7 @@ const styles = StyleSheet.create({
   guidelines: {
     marginTop: 10,
     backgroundColor: "#fff",
-    padding: 15,
+    paddingLeft: 50,
     borderRadius: 10,
     width: "100%",
   },
@@ -249,7 +258,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.PRIMARY,
     paddingVertical: 12,
     color: Colors.WHITE,
-    paddingHorizontal: 40,
+    paddingHorizontal: 70,
     borderRadius: 8,
   },
   nextText: {

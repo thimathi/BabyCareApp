@@ -5,9 +5,12 @@ import {
   StyleSheet,
   Text,
   Button,
+  SafeAreaView,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+
+import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../../constant/Colors";
 import { router, useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -29,7 +32,7 @@ export default function Step1ParentInfo({ navigation }) {
     date_of_birth: "",
     contact_number: "",
   });
-  
+
   const { email } = useLocalSearchParams();
 
   const handleChange = (key, value) => {
@@ -37,7 +40,7 @@ export default function Step1ParentInfo({ navigation }) {
   };
 
   const handleNext = async () => {
-    const response = await insertParentInfo(formData,email);
+    const response = await insertParentInfo(formData, email);
     if (response.success) {
       const userId = response.user_id;
       router.push({
@@ -50,100 +53,136 @@ export default function Step1ParentInfo({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.push("./../../OnboardingScreen1.jsx")}
-        >
-          <MaterialIcons name="arrow-back" size={24} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Create Parent Account</Text>
-        <MaterialIcons name="more-vert" size={24} color="black" />
-      </View>
-
-      <ScrollView style={styles.container}>
-        <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => router.push("./../../OnboardingScreen1")}
+          >
+            <Ionicons name="chevron-back" size={24} color="#fff" />
+          </TouchableOpacity>
+          <Text style={styles.headerText}>Create Parent Account</Text>
+        </View>
+        <ScrollView style={styles.cardSection}>
+          <Text style={styles.label}>First Name</Text>
           <TextInput
             style={styles.input}
             placeholder="First Name"
             value={formData.first_name}
-            onChangeText={(text) => handleChange("first_name", text)}
+            onChangeText={(text) =>
+              setFormData({ ...formData, first_name: text })
+            }
           />
 
+          <Text style={styles.label}>Second Name</Text>
           <TextInput
             style={styles.input}
-            placeholder="Last Name"
+            placeholder="Second Name"
             value={formData.second_name}
-            onChangeText={(text) => handleChange("second_name", text)}
+            onChangeText={(text) =>
+              setFormData({ ...formData, second_name: text })
+            }
           />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Date of Birth"
-            value={formData.date_of_birth}
-            onChangeText={(text) => handleChange("date_of_birth", text)}
-          />
-
-          <TextInput
-            style={styles.input}
-            placeholder="Contact Number"
-            value={formData.contact_number}
-            onChangeText={(text) => handleChange("contact_number", text)}
-          />
-
+          <Text style={styles.label}>Age</Text>
           <TextInput
             style={styles.input}
             placeholder="Age"
-            keyboardType="numeric"
             value={formData.age}
-            onChangeText={(numeric) => handleChange("age", numeric)}
+            onChangeText={(numeric) =>
+              setFormData({ ...formData, age: numeric })
+            }
           />
 
+          <Text style={styles.label}>Address</Text>
           <TextInput
             style={styles.input}
             placeholder="Address"
             value={formData.address}
-            onChangeText={(text) => handleChange("address", text)}
+            onChangeText={(text) => setFormData({ ...formData, address: text })}
           />
 
+          <Text style={styles.label}>Country</Text>
           <TextInput
             style={styles.input}
             placeholder="Country"
             value={formData.country}
-            onChangeText={(text) => handleChange("country", text)}
+            onChangeText={(text) => setFormData({ ...formData, country: text })}
           />
 
+          <Text style={styles.label}>District</Text>
           <TextInput
             style={styles.input}
             placeholder="District"
             value={formData.district}
-            onChangeText={(text) => handleChange("district", text)}
+            onChangeText={(text) =>
+              setFormData({ ...formData, district: text })
+            }
           />
 
+          <Text style={styles.label}>Town</Text>
           <TextInput
             style={styles.input}
             placeholder="Town"
             value={formData.town}
-            onChangeText={(text) => handleChange("town", text)}
+            onChangeText={(text) => setFormData({ ...formData, town: text })}
           />
 
-          <TouchableOpacity
-            style={styles.Button}
-            onPress={handleNext} 
-          >
+          <Text style={styles.label}>Date of Birth</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Date of Birth"
+            value={formData.date_of_birth}
+            onChangeText={(text) =>
+              setFormData({ ...formData, date_of_birth: text })
+            }
+          />
+
+          <Text style={styles.label}>Contact Number</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Contact Number"
+            value={formData.contact_number}
+            onChangeText={(phone) => setFormData({ ...formData, name: phone })}
+          />
+
+          <TouchableOpacity style={styles.Button} onPress={handleNext}>
             <Text style={styles.Buttontext}>Next</Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.BACKGROUND,
-    padding: 20,
+    backgroundColor: Colors.PRIMARY,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  header: {
+    backgroundColor: Colors.PRIMARY,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headerText: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+  cardSection: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    marginTop: 20,
   },
   title: {
     fontWeight: "bold",
@@ -182,14 +221,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 10,
-    padding: 20,
-    backgroundColor: Colors.SECONDARY,
-    justifyContent: "space-between",
-  },
+
   headerTitle: {
     fontSize: 18,
     fontWeight: "bold",

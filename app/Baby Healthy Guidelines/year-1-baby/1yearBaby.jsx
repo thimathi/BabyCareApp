@@ -7,7 +7,7 @@ import {MaterialIcons} from "@expo/vector-icons";
 import {router} from "expo-router";
 
 
-export default function _1yearBaby() {
+export default function Year_1_Baby() {
 
     return (
         <ScrollView style={styles.scroll}>
@@ -15,7 +15,7 @@ export default function _1yearBaby() {
             <View style={styles.container}>
 
                 <View style={styles.Topheader}>
-                    <TouchableOpacity onPress={() => router.push("./../BabyHealthGuidelines")}>
+                    <TouchableOpacity onPress={() => router.push("./../../Baby Healthy Guidelines")}>
                         <MaterialIcons name="arrow-back" size={24} color="black" />
                     </TouchableOpacity>
                     <Text style={styles.headerText}>1 to 2 Year Baby Healthy Guidelines</Text>

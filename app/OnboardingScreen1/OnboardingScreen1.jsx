@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     SafeAreaView,
-    StatusBar
+    StatusBar,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 
@@ -18,32 +18,32 @@ const slides = [
     {
         key: '1',
         title: 'Create New Account With Full Details',
-        image: require('../../assets/images/Registergif.gif'),
+        image: require('./../../assets/images/Registergif.gif'),
     },
     {
         key: '2',
         title: 'Read New Mother Guidance and morale',
-        image: require('../../assets/images/Meet your Doctor.gif'),
+        image: require('./../../assets/images/Meet your Doctor.gif'),
     },
     {
         key: '3',
         title: 'Read Babe Healthy Guidance',
-        image: require('../../assets/images/114138-conversation.gif'),
+        image: require('./../../assets/images/crare mom.gif'),
     },
     {
-        key: '3',
+        key: '4',
         title: 'Read New Postpartum care',
-        image: require('../../assets/images/114138-conversation.gif'),
+        image: require('./../../assets/images/Postpartum care.gif'),
     },
     {
-        key: '3',
+        key: '5',
         title: 'Feel free with the pregnancy and mom roll with baby care',
-        image: require('../../assets/images/114138-conversation.gif'),
+        image: require('./../../assets/images/P mother 2.png'),
     },
     {
-        key: '3',
-        title: 'Grow up your childed better healhty.',
-        image: require('../../assets/images/114138-conversation.gif'),
+        key: '6',
+        title: 'Grow up your child better healthy.',
+        image: require('./../../assets/images/BabyExersice.gif'),
     },
 ];
 
@@ -61,8 +61,7 @@ const OnboardingScreen1 = () => {
     const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
     const skip = () => {
-        // Correct the path to use "/Step1/ParentInfo" instead of "Step1ParentInfo"
-        router.push("./../mother-registation/step-1-parent-info");
+        router.push('./../mother-registation/step-1-parent-info');
     };
 
     const renderItem = ({ item }) => (
@@ -99,13 +98,13 @@ const OnboardingScreen1 = () => {
                         key={index}
                         style={[
                             styles.dot,
-                            currentIndex === index && styles.activeDot
+                            currentIndex === index ? styles.activeDot : null,
                         ]}
                     />
                 ))}
             </View>
 
-            <Text style={styles.footer}>2MBS IT Solution Copyright 2025</Text>
+            <Text style={styles.footer}>2MBS IT Solution © 2025</Text>
         </SafeAreaView>
     );
 };
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
         color: '#333',
         lineHeight: 28,
         fontWeight: '500',
+        paddingHorizontal: 20,
     },
     skip: {
         position: 'absolute',
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     dotsContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
+        alignItems: 'center',
         marginBottom: 15,
     },
     dot: {

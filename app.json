@@ -5,41 +5,18 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "babymine",
-    "deepLinking":true,
+    "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
-      "infoPlist": {
-        "LSApplicationQueriesSchemes": ["https", "http"],
-        "CFBundleURLTypes": [
-          {
-            "CFBundleURLSchemes": ["babycareapp"]
-          }
-        ]
-      }
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "intentFilters": [
-        {
-          "action": "VIEW",
-          "data": [
-            {
-              "scheme": "babycareapp",
-              "host": "*"
-            }
-          ],
-          "category": ["BROWSABLE", "DEFAULT"]
-        }
-      ]
-    }
-  
-      
+      "package": "com.anonymous.BabyCareApp"
     },
     "web": {
       "bundler": "metro",
@@ -64,4 +41,4 @@
       "typedRoutes": true
     }
   }
-
+}
