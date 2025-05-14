@@ -23,18 +23,18 @@ The **Baby Care Mobile Application** is a comprehensive digital parenting assist
 ## 🛠️ Tech Stack
 ### Mobile App (iOS & Android)
 - **Framework:** React Native
-- **Backend:** AWS Amplify (Auth, API, Storage)
+- **Backend:** Supabase
 - **State Management:** Redux
 - **Navigation:** React Navigation
-- **Database:** AWS RDS (PostgreSQL/MySQL)
-- **Push Notifications:** AWS SNS
+- **Database:** Supabase - PostgreSQL
+- **Push Notifications:** Supabase
 
 ### Web Admin Panel
 - **Framework:** React.js
-- **Authentication:** AWS Cognito
+- **Authentication:** Supabase
 - **Dashboard UI:** Material UI
-- **Data Visualization:** Chart.js
-- **Backend APIs:** AWS Lambda (serverless) + API Gateway
+- **Data Visualization:** React Native SVG
+- **Backend APIs:** Supabase + API Gateway
 
 ## 💰 Monetization Strategy
 - **Freemium Model:** Basic features available for free.
